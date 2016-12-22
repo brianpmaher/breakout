@@ -8,3 +8,4 @@ python src/game.py
 
 # Credit
 Zealex for [basic arkanoid sprite pack](http://opengameart.org/content/basic-arkanoid-pack).
+beren77 for [space backdrop](http://opengameart.org/content/space-backdrop)
