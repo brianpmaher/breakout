@@ -10,6 +10,8 @@ import pygame.image
 import pygame.time
 
 def game():
+    """Main game function. Initializes and loads game assets and handles
+    events."""
     # Initialize screen
     pygame.init()
     screen = pygame.display.set_mode((800, 600))

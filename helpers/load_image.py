@@ -4,7 +4,8 @@ import pygame.image
 from pygame.locals import *
 
 def load_png(path):
-    """Load an image and return the image object
+    """Load an image and return the image object.
+
     Args:
         path (str): The image file path to load.
 

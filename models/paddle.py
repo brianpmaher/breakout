@@ -16,6 +16,9 @@ class Paddle(pygame.sprite.Sprite):
         speed (int): The speed that the paddle can move.
         state (str): The state the current paddle is in. Can be 'stopped',
             'move-left', or 'move-right'
+        delta_x (int): The change in x value that the paddle is currently
+            doing. This is set to positive or negative speed when the paddle is
+            moving left or right and 0 when the paddle is stopped.
     """
 
     def __init__(self):
@@ -33,14 +36,22 @@ class Paddle(pygame.sprite.Sprite):
         self.rect.x = self.area.centerx - (self.rect.width / 2)
 
     def move_left(self):
+        """Moves the paddle left."""
         self.state = 'move-left'
         self.delta_x = -self.speed
 
     def move_right(self):
+        """Moves the paddle right."""
         self.state = 'move-right'
         self.delta_x = self.speed
 
     def stop(self, key):
+        """Stops the paddle only if the key that was lifted matches the
+        direction that the paddle was last moving.
+
+        Args:
+            key (pygame.key): The key that was released.
+        """
         if self.state == 'move-left' and key == pygame.K_LEFT:
             self.state = 'stopped'
             self.delta_x = 0
@@ -49,6 +60,7 @@ class Paddle(pygame.sprite.Sprite):
             self.delta_x = 0
 
     def update(self):
+        """Updates the paddle position."""
         new_pos = self.rect.move([self.delta_x, 0])
         if self.area.contains(new_pos):
             self.rect = new_pos
