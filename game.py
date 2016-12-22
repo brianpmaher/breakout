@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
+from helpers.load_image import load_png
+from models.paddle import Paddle
+
 import os
 import sys
 import pygame
 import pygame.image
+import pygame.time
 
 def game():
     # Initialize screen
@@ -13,19 +17,31 @@ def game():
 
     # Initialize background
     background_path = os.path.join('assets', 'backgrounds', 'space.png')
-    background = pygame.image.load(background_path)
+    background = load_png(background_path)
+
+    # Initialize player Paddle
+    paddle = Paddle()
+    paddle_sprite = pygame.sprite.Group(paddle)
 
     # Blit everything onto the screen
     screen.blit(background, (0, 0))
     pygame.display.flip()
 
+    # Initialize cock
+    clock = pygame.time.Clock()
+
     # Event loop
     while True:
+        # Make sure the game doesn't run at more than 60 fps
+        clock.tick(60)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
 
+        screen.blit(background, paddle.rect, paddle.rect)
         screen.blit(background, (0, 0))
+        paddle_sprite.draw(screen)
         pygame.display.flip()
 
 if __name__ == '__main__':
