@@ -1,7 +1,0 @@
-import pygame
-
-def game():
-    pass
-
-if __name__ == '__main__':
-    game()
