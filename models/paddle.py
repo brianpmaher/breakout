@@ -26,6 +26,7 @@ class Paddle(pygame.sprite.Sprite):
         self.area = pygame.display.get_surface().get_rect()
         self.speed = 10
         self.state = 'stopped'
+        self.delta_x = 0
 
         # Initialize the paddle location to 20px above the bottom and centered.
         self.rect.y = self.area.bottom - self.rect.height - 20
@@ -33,15 +34,21 @@ class Paddle(pygame.sprite.Sprite):
 
     def move_left(self):
         self.state = 'move-left'
+        self.delta_x = -self.speed
 
     def move_right(self):
         self.state = 'move-right'
+        self.delta_x = self.speed
 
-    def stop(self):
-        self.state = 'stopped'
+    def stop(self, key):
+        if self.state == 'move-left' and key == pygame.K_LEFT:
+            self.state = 'stopped'
+            self.delta_x = 0
+        elif self.state == 'move-right' and key == pygame.K_RIGHT:
+            self.state = 'stopped'
+            self.delta_x = 0
 
     def update(self):
-        if self.state == 'move-right':
-            self.rect.x += self.speed
-        elif self.state == 'move-left':
-            self.rect.x -= self.speed
+        new_pos = self.rect.move([self.delta_x, 0])
+        if self.area.contains(new_pos):
+            self.rect = new_pos

@@ -38,14 +38,14 @@ def game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     paddle.move_left()
                 elif event.key == pygame.K_RIGHT:
                     paddle.move_right()
-            elif event.type == pygame.KEYUP:
+            if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                    paddle.stop()
+                    paddle.stop(event.key)
 
         screen.blit(background, paddle.rect, paddle.rect)
         screen.blit(background, (0, 0))
