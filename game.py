@@ -25,6 +25,9 @@ def game():
     paddle = Paddle()
     paddle_sprite = pygame.sprite.Group(paddle)
 
+    # Initialize the bricks
+    # TODO
+
     # Blit everything onto the screen
     screen.blit(background, (0, 0))
     pygame.display.flip()
