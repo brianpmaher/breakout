@@ -2,6 +2,7 @@
 
 from helpers.load_image import load_png
 from models.paddle import Paddle
+from models.brick import Brick
 
 import os
 import sys
@@ -26,7 +27,8 @@ def game():
     paddle_sprite = pygame.sprite.Group(paddle)
 
     # Initialize the bricks
-    # TODO
+    bricks = Brick.init_bricks()
+    brick_sprites = pygame.sprite.Group(bricks)
 
     # Blit everything onto the screen
     screen.blit(background, (0, 0))
@@ -52,10 +54,21 @@ def game():
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     paddle.stop(event.key)
 
+        # Blit all objects onto background.
+        for brick in bricks:
+            screen.blit(background, brick.rect, brick.rect)
         screen.blit(background, paddle.rect, paddle.rect)
         screen.blit(background, (0, 0))
+
+        # Update all sprites.
         paddle_sprite.update()
+        brick_sprites.update()
+
+        # Draw all sprites.
         paddle_sprite.draw(screen)
+        brick_sprites.draw(screen)
+
+        # Flip the display.
         pygame.display.flip()
 
 if __name__ == '__main__':

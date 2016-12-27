@@ -8,6 +8,7 @@ import pygame.display
 
 class Paddle(pygame.sprite.Sprite):
     """A player paddle object.
+
     Attributes:
         image (pygame.Surface): The paddle sprite image.
         rect (pygame.Rect): The rectangle around the paddle sprite image.
