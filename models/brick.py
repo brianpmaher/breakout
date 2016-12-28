@@ -1,8 +1,9 @@
-from helpers.load_image import load_png
-
 import os
-import pygame.sprite
 from collections import namedtuple
+
+import pygame.sprite
+
+from helpers.load_image import load_png
 
 
 class Brick(pygame.sprite.Sprite):
@@ -50,7 +51,7 @@ class Brick(pygame.sprite.Sprite):
 
         return bricks
 
-    def __init__(self, coord, color):
+    def __init__(self, coords, color):
         """Initailizes a game brick.
 
         Args:
@@ -64,5 +65,5 @@ class Brick(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         # Initialize the brick location.
-        self.rect.x = coord.x
-        self.rect.y = coord.y
+        self.rect.x = coords.x
+        self.rect.y = coords.y

@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
-from helpers.load_image import load_png
-from models.paddle import Paddle
-from models.brick import Brick
-
 import os
 import sys
+
 import pygame
 import pygame.image
 import pygame.time
+
+from helpers.load_image import load_png
+from models.paddle import Paddle
+from models.brick import Brick
+from models.ball import Ball
 
 def game():
     """Main game function. Initializes and loads game assets and handles
@@ -25,6 +27,10 @@ def game():
     # Initialize player Paddle
     paddle = Paddle()
     paddle_sprite = pygame.sprite.Group(paddle)
+
+    # Initialize the ball
+    ball = Ball()
+    ball_sprite = pygame.sprite.Group(ball)
 
     # Initialize the bricks
     bricks = Brick.init_bricks()
@@ -54,18 +60,21 @@ def game():
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     paddle.stop(event.key)
 
+        screen.blit(background, paddle.rect, paddle.rect)
+        screen.blit(background, ball.rect, ball.rect)
         # Blit all objects onto background.
         for brick in bricks:
             screen.blit(background, brick.rect, brick.rect)
-        screen.blit(background, paddle.rect, paddle.rect)
         screen.blit(background, (0, 0))
 
         # Update all sprites.
         paddle_sprite.update()
+        ball.update(paddle)
         brick_sprites.update()
 
         # Draw all sprites.
         paddle_sprite.draw(screen)
+        ball_sprite.draw(screen)
         brick_sprites.draw(screen)
 
         # Flip the display.

@@ -1,9 +1,11 @@
-from helpers.load_image import load_png
-
 import os
+from collections import namedtuple
+
 import pygame
 import pygame.sprite
 import pygame.display
+
+from helpers.load_image import load_png
 
 
 class Paddle(pygame.sprite.Sprite):
@@ -65,3 +67,12 @@ class Paddle(pygame.sprite.Sprite):
         new_pos = self.rect.move([self.delta_x, 0])
         if self.area.contains(new_pos):
             self.rect = new_pos
+
+    def get_coords(self):
+        """Returns the coordinates of the paddle as a namedtuple of the rect.
+
+        Returns:
+            namedtuple: The paddle coordinates.
+        """
+        Coord = namedtuple('Coord', ['x', 'y'])
+        return Coord(self.rect.x, self.rect.y)
