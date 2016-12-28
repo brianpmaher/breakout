@@ -90,3 +90,6 @@ ENV/
 
 # Vim temporary files
 *.swp
+
+# JetBrains project settings
+.idea
