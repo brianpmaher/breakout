@@ -56,20 +56,22 @@ def game():
                     paddle.move_left()
                 elif event.key == pygame.K_RIGHT:
                     paddle.move_right()
+                if event.key == pygame.K_SPACE:
+                    ball.fire()
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     paddle.stop(event.key)
 
+        # Blit all objects onto background.
         screen.blit(background, paddle.rect, paddle.rect)
         screen.blit(background, ball.rect, ball.rect)
-        # Blit all objects onto background.
         for brick in bricks:
             screen.blit(background, brick.rect, brick.rect)
         screen.blit(background, (0, 0))
 
         # Update all sprites.
         paddle_sprite.update()
-        ball.update(paddle)
+        ball.update(paddle, bricks)
         brick_sprites.update()
 
         # Draw all sprites.
