@@ -51,13 +51,13 @@ class Ball(pygame.sprite.Sprite):
             new_pos = self.__calc_pos()
         else:
             # Check for collision with paddle
-            if paddle.rect.contains(new_pos):
+            if paddle.rect.colliderect(new_pos):
                 self.angle = -self.angle
                 new_pos = self.__calc_pos()
 
             # Check for collision with bricks
             for brick in bricks:
-                if brick.rect.contains(new_pos):
+                if brick.rect.colliderect(new_pos):
                     self.angle = -self.angle
                     new_pos = self.__calc_pos()
                     brick.kill()
