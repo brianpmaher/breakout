@@ -52,8 +52,10 @@ class Ball(pygame.sprite.Sprite):
             bl = not self.area.collidepoint(new_pos.bottomleft)
             br = not self.area.collidepoint(new_pos.bottomright)
 
-            if (tl and tr) or (bl and br):  # hit top or bottom wall
+            if tl and tr:  # hit top wall
                 self.angle = -self.angle
+            elif bl and br:  # hit bottom wall
+                self.state = 'deleted'
             elif (tl and bl) or (tr and br):  # hit left or right wall
                 self.angle = 180 - self.angle
         else:

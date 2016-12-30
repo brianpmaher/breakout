@@ -35,7 +35,7 @@ class Brick(pygame.sprite.Sprite):
 
     @staticmethod
     def init_bricks():
-        """Initailizes the bricks with their coordinates.
+        """Initializes the bricks with their coordinates.
 
         Returns:
             List(Brick): The list of game bricks.
@@ -52,7 +52,7 @@ class Brick(pygame.sprite.Sprite):
         return bricks
 
     def __init__(self, coords, color):
-        """Initailizes a game brick.
+        """Initializes a game brick.
 
         Args:
             coords (namedtuple): The coordinates for the brick.

@@ -6,11 +6,35 @@ import sys
 import pygame
 import pygame.image
 import pygame.time
+import pygame.font
 
 from helpers.load_image import load_png
 from models.paddle import Paddle
 from models.brick import Brick
 from models.ball import Ball
+
+VERSION = 0.1
+
+
+def game_over(background, paddle, ball, bricks, message):
+    """Displays the win/loss message and ends the game.
+
+    Args:
+        background (pygame.Surface): The game background.
+        paddle (Paddle): The game paddle.
+        ball (Ball): The game ball.
+        bricks (List(Brick)): List of game bricks.
+        message (str): The end game display message.
+    """
+    paddle.kill()
+    ball.kill()
+    for brick in bricks:
+        brick.kill()
+    font = pygame.font.Font(None, 100)
+    text = font.render(message, 1, (255, 255, 255))
+    textpos = text.get_rect(centerx=background.get_width() / 2,
+                            centery=background.get_height() / 2)
+    background.blit(text, textpos)
 
 def game():
     """Main game function. Initializes and loads game assets and handles
@@ -73,6 +97,14 @@ def game():
         paddle_sprite.update()
         ball_sprite.update(paddle, bricks)
         brick_sprites.update()
+
+        # Check for win
+        if len(bricks) == 0:
+            game_over(background, paddle, ball, bricks, 'You Win!')
+
+        # Check for loss
+        if ball.state == 'deleted':
+            game_over(background, paddle, ball, bricks, 'Game Over.')
 
         # Draw all sprites.
         paddle_sprite.draw(screen)
