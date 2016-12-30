@@ -25,17 +25,14 @@ def game():
     background = load_png(background_path)
 
     # Initialize player Paddle
-    global paddle
     paddle = Paddle()
     paddle_sprite = pygame.sprite.Group(paddle)
 
     # Initialize the ball
-    global ball
     ball = Ball()
     ball_sprite = pygame.sprite.Group(ball)
 
     # Initialize the bricks
-    global bricks
     bricks = Brick.init_bricks()
     brick_sprites = pygame.sprite.Group(bricks)
 
