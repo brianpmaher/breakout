@@ -34,8 +34,8 @@ class Ball(pygame.sprite.Sprite):
         """Updates the ball.
 
         Args:
-            paddle (Paddle): The player paddle.
-            bricks (List(Brick)): The bricks in the game.
+            paddle (Paddle): The game paddle.
+            bricks (List(Brick)): The game bricks.
         """
         if self.state == 'stopped':
             self.rect.x = \
@@ -47,21 +47,26 @@ class Ball(pygame.sprite.Sprite):
 
         # Check for collision with walls
         if not self.area.contains(new_pos):
-            self.angle = -self.angle
-            new_pos = self.__calc_pos()
+            tl = not self.area.collidepoint(new_pos.topleft)
+            tr = not self.area.collidepoint(new_pos.topright)
+            bl = not self.area.collidepoint(new_pos.bottomleft)
+            br = not self.area.collidepoint(new_pos.bottomright)
+
+            if (tl and tr) or (bl and br):  # hit top or bottom wall
+                self.angle = -self.angle
+            elif (tl and bl) or (tr and br):  # hit left or right wall
+                self.angle = 180 - self.angle
         else:
             # Check for collision with paddle
             if paddle.rect.colliderect(new_pos):
                 self.angle = -self.angle
-                new_pos = self.__calc_pos()
-
-            # Check for collision with bricks
-            for brick in bricks:
-                if brick.rect.colliderect(new_pos):
-                    self.angle = -self.angle
-                    new_pos = self.__calc_pos()
-                    brick.kill()
-                    bricks.remove(brick)
+            else:
+                # Check for collision with bricks
+                for brick in bricks:
+                    if brick.rect.colliderect(new_pos):
+                        self.angle = -self.angle
+                        brick.kill()
+                        bricks.remove(brick)
 
         self.rect = new_pos
 
@@ -72,6 +77,11 @@ class Ball(pygame.sprite.Sprite):
             self.angle = 90
 
     def __calc_pos(self):
-        new_x = int(math.cos(math.radians(self.angle))) * self.speed
-        new_y = -int(math.sin(math.radians(self.angle))) * self.speed
-        return self.rect.move(new_x, new_y)
+        """Calculates the new position of the ball given its angle.
+
+        Returns:
+            Rect: The ball's new bounding Rectangle given the angle.
+        """
+        delta_x = int(math.cos(math.radians(self.angle)) * self.speed)
+        delta_y = -int(math.sin(math.radians(self.angle)) * self.speed)
+        return self.rect.move(delta_x, delta_y)
