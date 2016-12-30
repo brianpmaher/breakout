@@ -59,7 +59,17 @@ class Ball(pygame.sprite.Sprite):
         else:
             # Check for collision with paddle
             if paddle.rect.colliderect(new_pos):
-                self.angle = -self.angle
+                # When colliding with the paddle, the ball's angle is changed
+                # depending on where the ball collided with the paddle. This
+                # angle is not dependant on the angle the ball is currently
+                # traveling. The angle ranges from 26 at the right-most surface
+                # of the paddle, to 154 at the left-most.
+                angle = 26 + paddle.rect.right - self.rect.centerx
+                if angle < 26:
+                    angle = 26
+                elif angle > 154:
+                    angle = 154
+                self.angle = angle
             else:
                 # Check for collision with bricks
                 for brick in bricks:
